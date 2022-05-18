@@ -11,5 +11,5 @@ class Overworld {
             this.ctx.drawImage(image, 0, 0); // which image to get pixels from and x, y coordinates
         };
         image.src = "/images/maps/DemoLower.png"
-    }
+    };
 }
