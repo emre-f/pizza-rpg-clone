@@ -10,6 +10,6 @@ class Overworld {
         image.onload = () => {
             this.ctx.drawImage(image, 0, 0); // which image to get pixels from and x, y coordinates
         };
-        image.src = "images/maps/DemoLower.png"
+        image.src = "images/maps/DemoLower.png" // assign source to image
     };
 }
