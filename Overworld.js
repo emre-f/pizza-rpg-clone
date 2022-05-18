@@ -15,21 +15,21 @@ class Overworld {
         const x = 5;
         const y = 6;
 
-        // const shadow = new Image();
-        // shadow.onload = () => {
-        //     this.ctx.drawImage(
-        //         shadow, // image we are drawing from
-        //         0, // starting point of left crop
-        //         0, // the top cut
-        //         32, // pixel width of cut
-        //         32, // pixel height of cut
-        //         x * 16 - 8, // x-coord of where we are drawing [x16 because each grid is 16x16 pixels]
-        //         y * 16 + 18, // y-coord of where we are drawing
-        //         32, // the actual scale we'll draw in (can be used to scale up/down) [width]
-        //         32 // [height]
-        //     );
-        // };
-        // shadow.src = "images/characters/shadow.png"
+        const shadow = new Image();
+        shadow.onload = () => {
+            this.ctx.drawImage(
+                shadow, // image we are drawing from
+                0, // starting point of left crop
+                0, // the top cut
+                32, // pixel width of cut
+                32, // pixel height of cut
+                x * 16 - 8, // x-coord of where we are drawing [x16 because each grid is 16x16 pixels]
+                y * 16 + 18, // y-coord of where we are drawing
+                32, // the actual scale we'll draw in (can be used to scale up/down) [width]
+                32 // [height]
+            );
+        };
+        shadow.src = "images/characters/shadow.png"
 
         const hero = new Image();
         hero.onload = () => {
