@@ -12,39 +12,19 @@ class Overworld {
         };
         image.src = "images/maps/DemoLower.png" // assign source to image
 
-        const x = 5;
-        const y = 6;
+        // Place some game objects
+        const hero = new GameObject({
+            x: 5,
+            y: 6
+        })
 
-        const shadow = new Image();
-        shadow.onload = () => {
-            this.ctx.drawImage(
-                shadow, // image we are drawing from
-                0, // starting point of left crop
-                0, // the top cut
-                32, // pixel width of cut
-                32, // pixel height of cut
-                x * 16 - 8, // x-coord of where we are drawing [x16 because each grid is 16x16 pixels]
-                y * 16 + 18, // y-coord of where we are drawing
-                32, // the actual scale we'll draw in (can be used to scale up/down) [width]
-                32 // [height]
-            );
-        };
-        shadow.src = "images/characters/shadow.png"
+        const npc1 = new GameObject({
+            x: 7,
+            y: 9,
+            src: "images/characters/people/npc1.png"
+        })
 
-        const hero = new Image();
-        hero.onload = () => {
-            this.ctx.drawImage(
-                hero, // image we are drawing from
-                0, // starting point of left crop
-                0, // the top cut
-                32, // pixel width of cut
-                32, // pixel height of cut
-                x * 16 - 8, // x-coord of where we are drawing [x16 because each grid is 16x16 pixels]
-                y * 16 + 18, // y-coord of where we are drawing
-                32, // the actual scale we'll draw in (can be used to scale up/down) [width]
-                32 // [height]
-            );
-        };
-        hero.src = "images/characters/people/hero.png"
+        hero.sprite.draw(this.ctx);
+        npc1.sprite.draw(this.ctx);
     };
 }
