@@ -14,19 +14,48 @@ class Person extends GameObject {
     }
 
     update(state) {
-        this.updatePosition();
+        if(this.movingProgressRemaining > 0) { // If we are in-between cells, continue finishing that move
+            this.updatePosition();
+        } else {
 
-        if(this.isPlayerControlled && this.movingProgressRemaining === 0 && state.arrow) {
-            this.direction = state.arrow;
+            // More cases for starting to walk will come here
+
+            // Case: We're keyboard ready, and have an arrow pressed
+            if(this.isPlayerControlled && state.arrow) {
+                this.startBehavior(state, {
+                    type: "walk",
+                    direction: state.arrow,
+                })
+            }
+            this.updateSprite(state);
+        }
+    }
+
+    startBehavior(state, behavior) {
+        // Setting character direction to behavior
+        this.direction = behavior.direction;
+        if(behavior.type === "walk") {
+            if(state.map.isSpaceTaken(this.x, this.y, this.direction)) { // If space is taken, don't move
+                return;
+            }
+
+            // Ready to walk!
+            state.map.moveWall(this.x, this.y, this.direction); // Move the "wall" that is on the character as character moves
             this.movingProgressRemaining = 16;
         }
     }
 
     updatePosition() {
-        if(this.movingProgressRemaining > 0) { // If we are in-between cells, continue finishing that move
-            const [property, change] = this.directionUpdate[this.direction]; // If direction is "down", propery will be "y" and dir will be 1
-            this[property] += change;
-            this.movingProgressRemaining -= 1;
+        const [property, change] = this.directionUpdate[this.direction]; // If direction is "down", propery will be "y" and dir will be 1
+        this[property] += change;
+        this.movingProgressRemaining -= 1;
+    }
+
+    updateSprite() { // Changing the animation depending on the direction we are looking towards
+        if (this.movingProgressRemaining > 0) { // If moving
+            this.sprite.setAnimation("walk-" + this.direction);
+            return;
         }
+        this.sprite.setAnimation("idle-" + this.direction); // If not moving -> idle
     }
 }
