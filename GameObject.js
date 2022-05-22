@@ -18,6 +18,8 @@ class GameObject {
         //Behavior loop
         this.behaviorLoop = config.behaviorLoop || [];
         this.behaviorLoopIndex = 0; // which part are we at
+
+        this.talking = config.talking || [];
     }
 
     // Adds us to the scene
