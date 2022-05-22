@@ -27,7 +27,9 @@ class Overworld {
             this.map.drawLowerImage(this.ctx, cameraPerson);
 
             //Draw gameobjects
-            Object.values(this.map.gameObjects).forEach(object => {
+            Object.values(this.map.gameObjects).sort((a,b) => {
+                return a.y - b.y; // Sort by y-values, to draw higher objects first
+            }).forEach(object => {
                 object.sprite.draw(this.ctx, cameraPerson);
             });
 
@@ -49,5 +51,17 @@ class Overworld {
         this.directionInput.init();
 
         this.startGameLoop();
+
+        // Fake cutscene to test
+        this.map.startCutscene([
+            { type: "textMessage", text: "HELLO THERE" },
+            { who: "npcA", type: "walk", direction: "left" },
+            { who: "npcA", type: "walk", direction: "left" },
+            { who: "hero", type: "walk", direction: "down" },
+            { who: "hero", type: "walk", direction: "down" },
+            { who: "npcA", type: "walk", direction: "left" },
+            { who: "npcA", type: "walk", direction: "left" },
+            { who: "npcA", type: "stand", direction: "up", time: 800 },
+        ])
     };
 }

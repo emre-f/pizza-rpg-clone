@@ -1,0 +1,33 @@
+.TextMessage {
+    /* Will appear on the bottom */
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 36px; /* Might seem small, but items will be scaled up! */
+    padding: 4px;
+    background: var(--menu-background);
+    border-top: 1px solid var(--menu-border-color);
+    color: var(--menu-border-color);
+}
+
+.TextMessage_p {
+    margin: 0;
+    font-size: 12px;
+}
+
+.TextMessage_button {
+    margin: 0;
+    font-size: 8px;
+    padding: 0;
+    -webkit-appearance: none;
+    background: none;
+    border: 0;
+    font-family: inherit;
+    cursor: pointer;
+
+    /* Hug bottom right side of container */
+    position: absolute;
+    right: 2px;
+    bottom: 0;
+}

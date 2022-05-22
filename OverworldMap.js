@@ -8,6 +8,8 @@ class OverworldMap {
 
         this.upperImage = new Image();
         this.upperImage.src = config.upperSrc; // roofs, treetops, etc.
+
+        this.isCutscenePlaying = false;
     }
 
     drawLowerImage(ctx, cameraPerson) {
@@ -28,12 +30,33 @@ class OverworldMap {
     }
 
     mountObjects() {
-        Object.values(this.gameObjects).forEach(o => {
+        Object.keys(this.gameObjects).forEach(key => {
+            let object = this.gameObjects[key];
+            object.id = key; // so "hero", "npc1", etc.
 
             //TODO: determine if object should actually mount (picked up item etc.)
 
-            o.mount(this);
+            object.mount(this);
         })
+    }
+
+    async startCutscene(events) {
+        this.isCutscenePlaying = true;
+
+        // Start loop of events, await each one
+        for (let i=0; i<events.length; i++) {
+            const eventHandler = new OverworldEvent({
+                event: events[i],
+                map: this,
+            })
+
+            await eventHandler.init(); // wait until this specific event is finished
+        }
+
+        this.isCutscenePlaying = false;
+
+        // Reset NPCs to do their idle behavior
+        Object.values(this.gameObjects).forEach(object => object.doBehaviorEvent(this));
     }
 
     addWall(x, y) {
@@ -59,11 +82,29 @@ window.OverworldMaps = {
                 x: utils.withGrid(5), // withGrid just multiplies the number by 16 (for smoother grid movement)
                 y: utils.withGrid(6),
             }),
-            // npc1: new Person({
-            //     x: utils.withGrid(7), 
-            //     y: utils.withGrid(9),
-            //     src: "images/characters/people/npc1.png"
-            // })
+            npcA: new Person({
+                x: utils.withGrid(9), 
+                y: utils.withGrid(9),
+                src: "images/characters/people/npc1.png",
+                behaviorLoop: [
+                    { type: "stand", direction: "left", time: 800 },
+                    { type: "stand", direction: "up", time: 800 },
+                    { type: "stand", direction: "right", time: 1200 },
+                    { type: "stand", direction: "up", time: 300 },
+                ]
+            }),
+            npcB: new Person({
+                x: utils.withGrid(3), 
+                y: utils.withGrid(7),
+                src: "images/characters/people/npc2.png",
+                behaviorLoop: [
+                    { type: "walk", direction: "left" },
+                    { type: "stand", direction: "up", time: 800 },
+                    { type: "walk", direction: "up" },
+                    { type: "walk", direction: "right" },
+                    { type: "walk", direction: "down" },
+                ]
+            }),
         },
         walls: {
             //"16,16": true
