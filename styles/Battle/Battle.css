@@ -6,7 +6,7 @@
     top: 0;
     bottom: 0;
 
-    background-image: url(/images/maps/StreetBattle.png); /* Will display the area that the battle is taking place in (ex for now) */
+    background-image: url(../../images/maps/StreetBattle.png); /* Will display the area that the battle is taking place in (ex for now) */
     background-size: cover;
     image-rendering: pixelated;
 }
