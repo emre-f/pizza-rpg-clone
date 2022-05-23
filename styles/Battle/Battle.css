@@ -1,0 +1,41 @@
+.Battle {
+    /* Hug all corners of the screen */
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+
+    background-image: url(/images/maps/StreetBattle.png); /* Will display the area that the battle is taking place in (ex for now) */
+    background-size: cover;
+    image-rendering: pixelated;
+}
+
+.Battle_hero, .Battle_enemy {
+    position: absolute;
+    transform: scale(2);
+
+    /* to have only 1 frame (instead of the whole frame sheet */
+    width: 32px;
+    height: 32px;
+    /* anything outside the box hidden (other frames) */
+    overflow: hidden;
+
+    background: url(../../images/characters/shadow.png) no-repeat no-repeat;
+}
+.Battle_hero img, .Battle_enemy img {
+    pointer-events: none;
+}
+
+/* positioning of characters */
+.Battle_hero {
+    bottom: 57px;
+    left: 1px;
+}
+.Battle_hero img {
+    transform: translateY(-64px) /* nudge hero spritesheet (make it look like hero is facing upwards) */
+}
+.Battle_enemy {
+    top: 42px;
+    right: -1px;    
+}

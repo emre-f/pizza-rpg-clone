@@ -8,12 +8,21 @@
     padding: 4px;
     background: var(--menu-background);
     border-top: 1px solid var(--menu-border-color);
-    color: var(--menu-border-color);
+    color: var(--menu-font-color);
 }
 
 .TextMessage_p {
     margin: 0;
     font-size: 12px;
+}
+
+/* for typewriter effect */
+.TextMessage span { 
+    opacity: 0; /* Starts off invisible */
+}
+
+.TextMessage span.revealed { 
+    opacity: 1;
 }
 
 .TextMessage_button {
