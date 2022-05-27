@@ -68,3 +68,48 @@
 .battle-spin-left {
     animation: battle-spin-left 0.8s;
 }
+
+/* glob orb */
+.glob-orb { /* animation will exist in this */
+    position: absolute;
+    width: 32px;
+    height: 32px;
+}
+@keyframes battle-glob-right {
+    0% { transform: translate3d(0, 0, 0) scale(0.5); opacity: 1 }
+    50% { transform: translate3d(10px, -80px, 0) scale(1); opacity: 1 }
+    80% { transform: translate3d(149px, -47px, 0) scale(1); opacity: 1 }
+    100% { transform: translate3d(149px, -47px, 0) scale(3); opacity: 0 }
+}
+.battle-glob-right {
+    left: 70px;
+    top: 104px;
+    animation: battle-glob-right 0.6s forwards;
+}
+/* glob left */
+@keyframes battle-glob-left {
+    0% { transform: translate3d(0, 0, 0) scale(0.5); opacity: 1 }
+    50% { transform: translate3d(-10px, -50px, 0) scale(1); opacity: 1 }
+    80% { transform: translate3d(-174px, 47px, 0) scale(1); opacity: 1 }
+    100% { transform: translate3d(-174px, 47px, 0) scale(3); opacity: 0 }
+}
+.battle-glob-left {
+    left: 227px;
+    top: 56px;
+    animation: battle-glob-left 0.6s forwards;
+}
+
+/* MY ANIM: on action miss */
+@keyframes battle-action-miss {
+    0% { transform: translate3d(0, 0, 0) rotate(0deg) scale(2) }
+    12.5% { transform: translate3d(-25%, 0, 0) rotate(15deg) scale(2) }
+    25% { transform: translate3d(25%, 0, 0) rotate(-15deg) scale(2) } 
+    37.5% { transform: translate3d(-12.5%, 0, 0) rotate(7deg) scale(2) } 
+    50% { transform: translate3d(12.5%, 0, 0) rotate(-7deg) scale(2) } 
+    100% { transform: translate3d(0, 0, 0) scale(2) } 
+}
+.battle-action-miss {
+    left: 227px;
+    top: 56px;
+    animation: battle-action-miss 0.75s;
+}

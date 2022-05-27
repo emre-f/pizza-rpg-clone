@@ -20,7 +20,7 @@ class TurnCycle {
             enemy
         })
 
-        const resultingEvents = submission.action.success;
+        const resultingEvents = caster.getReplacedEvents(submission.action.success); // Caster evalutes if any actions will fail
 
         for (let i = 0; i < resultingEvents.length; i++) {
             const event = {
@@ -31,6 +31,27 @@ class TurnCycle {
                 target: submission.target,
             }
             await this.onNewEvent(event);
+        }
+
+        // Check for post events (status effects etc.)
+        // Do things AFTER the original turn submission
+        const postEvents = caster.getPostEvents();
+        for (let i = 0; i < postEvents.length; i++) {
+            const event = {
+                ...postEvents[i],
+                submission,
+                action: submission.action,
+                caster,
+                target: submission.target
+            }
+
+            await this.onNewEvent(event);
+        }
+
+        // Check for status expiries
+        const expiredEvent = caster.decrementStatus();
+        if (expiredEvent) {
+            await this.onNewEvent(expiredEvent) // Only 1 event
         }
 
         // Next turn

@@ -5,7 +5,6 @@ class BattleEvent {
     }
 
     textMessage (resolve) {
-        console.log(this.event)
         const text = this.event.text
         .replace("{CASTER}", this.event.caster?.name)
         .replace("{TARGET}", this.event.target?.name)
@@ -21,7 +20,12 @@ class BattleEvent {
     }
 
     async stateChange(resolve) {
-        const { caster, target, damage } = this.event;
+        const { caster, target, damage, recover, status, action } = this.event;
+        let who = this.event.onCaster ? caster : target; // Should we heal the caster or the target? Does it have the flag?
+        if(action.targetType === "friendly") {
+            who = caster; // later will be able to choose teammate
+        }
+
         if (damage) {
             // Modify target
             target.update({
@@ -30,6 +34,26 @@ class BattleEvent {
 
             // Start blinking
             target.pizzaElement.classList.add("battle-damage-blink");
+        }
+
+        if (recover) {
+            let newHp = who.hp + recover;
+            if (newHp > who.maxHp) { newHp = who.maxHp }; // Can't overheal
+            
+            who.update({
+                hp: newHp
+            })
+        }
+
+        if (status) {
+            who.update({
+                status: {...status} // Copy the status object over
+            })
+        }
+        if (status === null) {
+            who.update({
+                status: null
+            })
         }
 
         // Wait a bit (so that user can see whats happening)

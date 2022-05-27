@@ -80,7 +80,59 @@ class Combatant {
 
         // Update level on screen
         this.hudElement.querySelector(".Combatant_level").innerText = this.level;
+
+        // Update status
+        const statusElement = this.hudElement.querySelector(".Combatant_status");
+        if (this.status) {
+            statusElement.innerText = this.status.type;
+            statusElement.style.display = "block";
+        } else {
+            statusElement.innerText = "";
+            statusElement.style.display = "none";
+        }
     } 
+
+    getReplacedEvents(originalEvents) {
+
+        if (this.status?.type === "clumsy" && utils.randomFromArray([true, false, false])) { // 33% chance of failure if clumsy
+            return [
+                { type: "animation", animation: "actionFailure" },
+                { type: "textMessage", text: "Slipping over! Action failed" }, // Original move will be replaced with this!
+            ]
+        }
+
+        return originalEvents;
+    }
+
+    getPostEvents() {
+        
+        if(this.status?.type === "saucy") {
+            return [
+                { type: "textMessage", text: "Saucy state effect triggered" },
+                { type: "stateChange", recover: 5, onCaster: true} // Heal the caster, not the target!
+            ]
+        }
+
+        return [];
+    }
+
+    decrementStatus() {
+        if (this.status?.expiresIn > 0) {
+            this.status.expiresIn -= 1;
+            if (this.status.expiresIn === 0) {
+                let statusName = this.status.type
+
+                this.update({
+                    status: null // remove the status
+                })
+                
+                return {
+                    type: "textMessage",
+                    text: "Status effect " + statusName + " has expired."
+                }
+            }
+        }
+    }
 
     init (container) {
         this.createElement();
